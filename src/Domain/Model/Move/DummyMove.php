@@ -10,16 +10,8 @@ use TicTacToe\Domain\Model\Position;
 use TicTacToe\Domain\Model\State;
 use function Lambdish\Phunctional\map;
 
-class PerfectMove implements MoveInterface
+class DummyMove implements MoveInterface
 {
-    /**
-     * I use this in order to optimize the recursivite in order to avoid calculate
-     * more than one the score of a game
-     *
-     * @var array
-     */
-    private $games = [];
-
     /**
      * Makes a move using the $boardState
      * $boardState contains 2 dimensional array of the game field
@@ -64,15 +56,8 @@ class PerfectMove implements MoveInterface
 
     private function minMaxValue(Game $game)
     {
-        $encode = json_encode($game->board()->state());
-        if (isset($this->games[$encode])) {
-            return $this->games[$encode];
-        }
-
         if ($game->isOver()) {
-            $score = $this->score($game);
-
-            return $score;
+            return $this->score($game);
         }
 
         $stateScore = ($game->turnUnit() === State::UNIT_HUMAN) ? -1000 : 1000;
@@ -87,26 +72,20 @@ class PerfectMove implements MoveInterface
             $availablePositions
         );
 
-        $turn = $game->turnUnit();
-        \Lambdish\Phunctional\each(
-            function (Game $nextGame) use ($turn, &$stateScore, $encode) {
-                $nextScore = $this->minMaxValue($nextGame);
-                if ($turn === State::UNIT_HUMAN) {
-                    if ($nextScore > $stateScore) {
-                        $stateScore = $nextScore;
-                    }
-                } else {
-                    if ($nextScore < $stateScore) {
-                        $stateScore = $nextScore;
-                    }
+        foreach ($availableNextGames as $nextGame) {
+            $nextScore = $this->minMaxValue($nextGame);
+            if ($game->turnUnit() === State::UNIT_HUMAN) {
+                if ($nextScore > $stateScore) {
+                    $stateScore = $nextScore;
                 }
-                $this->games[$encode] = $stateScore;
+            } else {
+                if ($nextScore < $stateScore) {
+                    $stateScore = $nextScore;
+                }
+            }
 
-            },
-            $availableNextGames
-        );
-
-        return $stateScore;
+            return $stateScore;
+        }
     }
 
     private function score(Game $game)

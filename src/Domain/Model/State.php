@@ -22,9 +22,9 @@ class State
 
     const STATUS_WIN_HUMAN = 4;
 
-    const HUMAN_UNIT = 'X';
+    const UNIT_HUMAN = 'X';
 
-    const BOT_UNIT = 'O';
+    const UNIT_BOT= 'O';
 
     public function __construct(Board $board)
     {
@@ -90,7 +90,7 @@ class State
 
     private function getWinnerState($unitWinner)
     {
-        return self::BOT_UNIT === $unitWinner
+        return self::UNIT_BOT === $unitWinner
             ? self::STATUS_WIN_BOT
             : self::STATUS_WIN_HUMAN;
     }

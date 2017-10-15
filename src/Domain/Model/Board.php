@@ -114,8 +114,8 @@ class Board
         return reduce(
             function ($reduce, $row) {
                 $unique = array_unique($row);
-                if (count($unique) === 1) {
-                    $reduce = !empty($unique[0]) ? $unique[0] : null;
+                if (count($unique) === 1 && !empty($unique[0])) {
+                    $reduce =  $unique[0];
                 }
 
                 return $reduce;

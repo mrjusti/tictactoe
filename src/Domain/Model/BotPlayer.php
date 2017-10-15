@@ -17,7 +17,7 @@ class BotPlayer
     public function __construct(MoveInterface $move)
     {
         $this->move  = $move;
-        $this->unit  = State::BOT_UNIT;
+        $this->unit  = State::UNIT_BOT;
     }
 
     /**

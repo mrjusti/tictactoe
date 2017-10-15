@@ -69,7 +69,7 @@ class Game
     public function nextDepth()
     {
         $depth = $this->depth();
-        if ($this->turnUnit() == State::BOT_UNIT) {
+        if ($this->turnUnit() == State::UNIT_HUMAN) {
             $depth++;
         }
 
@@ -78,6 +78,6 @@ class Game
 
     public function nextTurn(): string
     {
-        return $this->turnUnit() === State::BOT_UNIT ? State::HUMAN_UNIT : State::BOT_UNIT;
+        return $this->turnUnit() === State::UNIT_BOT ? State::UNIT_HUMAN : State::UNIT_BOT;
     }
 }
