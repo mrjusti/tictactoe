@@ -9,7 +9,15 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
+        <link rel="stylesheet" href="{{ elixir('css/app.css') }}" media="all">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- Scripts -->
+        <script>
+            window.Laravel = <?php echo json_encode([
+                'csrfToken' => csrf_token(),
+            ]); ?>;
+            document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';
+        </script>
         <!-- Styles -->
         <style>
             html, body {
@@ -65,17 +73,19 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div id="app" class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
                     Tic Tac Toe
                 </div>
-
+                <tictactoe></tictactoe>
                 <div class="links">
                     <a href="https://github.com/mrjusti/tictactoe">GitHub</a>
                     <a href="https://www.linkedin.com/in/hkleiman/">LinkedIn</a>
                 </div>
             </div>
         </div>
+        @include ('footer')
+        <script src="{{ elixir('js/app.js') }}"></script>
     </body>
 </html>

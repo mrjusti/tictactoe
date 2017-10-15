@@ -179,7 +179,7 @@ return [
 
         App\Providers\TacticianServiceProvider::class,
         App\Providers\TacticianHandlerServiceProvider::class,
-
+        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
     ],
 
     /*

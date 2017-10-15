@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Bus\CommandBusInterface;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use TicTacToe\Application\Service\MakeMoveQuery;
 
 class ApiController extends Controller
 {
@@ -17,8 +19,11 @@ class ApiController extends Controller
         $this->bus = $bus;
     }
 
-    public function nextMove()
+    public function next(Request $request)
     {
-        return response('', Response::HTTP_ACCEPTED);
+        $query = new MakeMoveQuery($request->get('grid'), 'X');
+        $response = $this->bus->dispatch($query);
+
+        return response($response, Response::HTTP_ACCEPTED);
     }
 }

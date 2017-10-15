@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bus\CommandBusInterface;
+use JavaScript;
 
 class HomeController extends Controller
 {
@@ -18,6 +19,13 @@ class HomeController extends Controller
 
     public function index()
     {
+        $grid = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', ''],
+        ];
+        Javascript::put(['grid' => $grid]);
+
         return view('welcome');
     }
 }

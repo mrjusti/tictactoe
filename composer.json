@@ -10,7 +10,8 @@
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "lambdish/phunctional": "^1.0",
-        "league/tactician": "^1.0"
+        "league/tactician": "^1.0",
+        "laracasts/utilities": "~2.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

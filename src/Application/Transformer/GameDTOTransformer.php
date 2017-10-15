@@ -6,13 +6,20 @@ use TicTacToe\Domain\Model\State;
 
 class GameDTOTransformer implements GameTransformer
 {
+    /**
+     * @var State
+     */
+    private $state;
+
     public function write(State $state): GameTransformer
     {
-        // TODO: Implement write() method.
+        $this->state = $state;
+
+        return $this;
     }
 
     public function read()
     {
-        // TODO: Implement read() method.
+        return $this->state->board()->state();
     }
 }
