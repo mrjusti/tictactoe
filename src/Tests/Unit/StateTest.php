@@ -3,10 +3,10 @@
 namespace TicTacToe\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use TicTacToe\Domain\Model\State;
+use TicTacToe\Domain\Model\GameState;
 use TicTacToe\Tests\Stub\BoardStub;
 use TicTacToe\Tests\Stub\PerfectMovePlayerStub;
-use TicTacToe\Tests\Stub\StateStub;
+use TicTacToe\Tests\Stub\GameStateStub;
 
 class StateTest extends TestCase
 {
@@ -20,7 +20,7 @@ class StateTest extends TestCase
             ['X', 'O', 'X'],
             ['X', 'O', 'X'],
         ];
-        $gameState = StateStub::get($board);
+        $gameState = GameStateStub::get($board);
         $this->assertTrue($gameState->isOver());
     }
 
@@ -32,7 +32,7 @@ class StateTest extends TestCase
      */
     public function given_all_field_in_a_row_taken_by_a_player_when_check_if_game_is_over_then_must_return_true($board)
     {
-        $gameState = StateStub::get($board);
+        $gameState = GameStateStub::get($board);
         $this->assertTrue($gameState->isOver());
     }
 
@@ -71,7 +71,7 @@ class StateTest extends TestCase
      */
     public function given_all_field_in_a_column_taken_by_a_player_when_check_if_game_is_over_then_must_return_true($board)
     {
-        $gameState = StateStub::get($board);
+        $gameState = GameStateStub::get($board);
         $this->assertTrue($gameState->isOver());
     }
 
@@ -110,7 +110,7 @@ class StateTest extends TestCase
      */
     public function given_all_field_taken_in_a_diagonal_by_a_player_when_check_if_game_is_over_then_must_return_true($board)
     {
-        $gameState = StateStub::get($board);
+        $gameState = GameStateStub::get($board);
         $this->assertTrue($gameState->isOver());
     }
 
@@ -142,7 +142,7 @@ class StateTest extends TestCase
      */
     public function given_empty_fields_and_no_winner_when_check_if_game_is_over_then_must_return_false($board)
     {
-        $gameState = StateStub::get($board);
+        $gameState = GameStateStub::get($board);
         $this->assertFalse($gameState->isOver());
     }
 
@@ -209,8 +209,8 @@ class StateTest extends TestCase
      */
     public function given_a_game_that_the_human_player_win_when_get_state_then_must_return_human_win($board)
     {
-        $gameState = StateStub::get($board);
-        $this->assertSame(State::STATUS_WIN_HUMAN, $gameState->status());
+        $gameState = GameStateStub::get($board);
+        $this->assertSame(GameState::STATUS_WIN_HUMAN, $gameState->status());
     }
 
     public function humanWin()
@@ -255,8 +255,8 @@ class StateTest extends TestCase
      */
     public function given_a_game_where_the_robot_player_win_when_get_state_must_return_robot_win($board)
     {
-        $gameState = StateStub::get($board);
-        $this->assertSame(State::STATUS_WIN_BOT, $gameState->status());
+        $gameState = GameStateStub::get($board);
+        $this->assertSame(GameState::STATUS_WIN_BOT, $gameState->status());
     }
 
     public function robotWin()
@@ -301,8 +301,8 @@ class StateTest extends TestCase
      */
     public function given_an_incomplete_board_when_get_state_then_must_return_running($board)
     {
-        $gameState = StateStub::get($board);
-        $this->assertSame(State::STATUS_RUNNING, $gameState->status());
+        $gameState = GameStateStub::get($board);
+        $this->assertSame(GameState::STATUS_RUNNING, $gameState->status());
     }
 
     public function running()
@@ -335,7 +335,7 @@ class StateTest extends TestCase
             ['O', 'O', 'X'],
             ['X', 'O', 'X'],
         ];
-        $gameState = StateStub::get($board);
-        $this->assertSame(State::STATUS_DRAW, $gameState->status());
+        $gameState = GameStateStub::get($board);
+        $this->assertSame(GameState::STATUS_DRAW, $gameState->status());
     }
 }

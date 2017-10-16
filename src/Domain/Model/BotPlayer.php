@@ -17,7 +17,7 @@ class BotPlayer
     public function __construct(MoveInterface $move)
     {
         $this->move  = $move;
-        $this->unit  = State::UNIT_BOT;
+        $this->unit  = GameState::UNIT_BOT;
     }
 
     /**
@@ -28,7 +28,7 @@ class BotPlayer
         return $this->unit;
     }
 
-    public function move(State $state): State
+    public function move(GameState $state): GameState
     {
         $board = $state->board();
         $position = $this->move->makeMove($board->state(), $this->unit());

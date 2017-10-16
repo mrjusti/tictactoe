@@ -6,7 +6,7 @@ use TicTacToe\Application\Transformer\GameTransformer;
 use TicTacToe\Domain\Model\Board;
 use TicTacToe\Domain\Model\BotPlayer;
 use TicTacToe\Domain\Model\Move\PerfectMove;
-use TicTacToe\Domain\Model\State;
+use TicTacToe\Domain\Model\GameState;
 use TicTacToe\Domain\Service\NextMoveMaker;
 
 class MakeMoveQueryHandler
@@ -21,16 +21,27 @@ class MakeMoveQueryHandler
      */
     private $transformer;
 
+    /**
+     * MakeMoveQueryHandler constructor.
+     *
+     * @param NextMoveMaker $nextMoveMaker
+     * @param GameTransformer $transformer
+     */
     public function __construct(NextMoveMaker $nextMoveMaker, GameTransformer $transformer)
     {
         $this->nextMoveMaker = $nextMoveMaker;
         $this->transformer = $transformer;
     }
 
+    /**
+     * @param MakeMoveQuery $query
+     *
+     * @return mixed
+     */
     public function handle(MakeMoveQuery $query)
     {
         $gameState = $this->nextMoveMaker->move(
-            new State(new Board($query->boardState())),
+            new GameState(new Board($query->boardState())),
             new BotPlayer(new PerfectMove())
         );
 

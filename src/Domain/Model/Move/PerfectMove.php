@@ -8,7 +8,7 @@ use TicTacToe\Domain\Model\Board;
 use TicTacToe\Domain\Model\Game;
 use TicTacToe\Domain\Model\MoveInterface;
 use TicTacToe\Domain\Model\Position;
-use TicTacToe\Domain\Model\State;
+use TicTacToe\Domain\Model\GameState;
 use function Lambdish\Phunctional\map;
 
 class PerfectMove implements MoveInterface
@@ -40,13 +40,13 @@ class PerfectMove implements MoveInterface
     public function makeMove($boardState, $playerUnit = 'X'): array
     {
         $board = new Board($boardState);
-        $game  = new Game(new State($board), $playerUnit);
+        $game  = new Game(new GameState($board), $playerUnit);
 
         // get all the possible actions with their respective scores
         $possibleActions = $this->possibleActions($game);
 
         // get the better position (max or min score)
-        $position = $game->turnUnit() === State::UNIT_HUMAN
+        $position = $game->turnUnit() === GameState::UNIT_HUMAN
             ? $possibleActions->maxScoredPosition()
             : $possibleActions->minScoredPosition();
 
@@ -100,7 +100,7 @@ class PerfectMove implements MoveInterface
 
         // If the turn is for the humman I have to maximize the score, so I start with a minimum value, the opposite
         // for the bot
-        $stateScore = ($game->turnUnit() === State::UNIT_HUMAN) ? -500 : 500;
+        $stateScore = ($game->turnUnit() === GameState::UNIT_HUMAN) ? -500 : 500;
 
         // given the possible games, I will calculate the min or max score with future possibilities
         $availableNextGames = $this->possibleGames($game);
@@ -109,7 +109,7 @@ class PerfectMove implements MoveInterface
                 // here is the recursive, I will compare scores if it is the turn of the human to maximize or minimize
                 // if it is the bot
                 $nextScore = $this->minMaxValue($nextGame);
-                if ($game->turnUnit() === State::UNIT_HUMAN) {
+                if ($game->turnUnit() === GameState::UNIT_HUMAN) {
                     if ($nextScore > $stateScore) {
                         $stateScore = $nextScore;
                     }
@@ -154,10 +154,10 @@ class PerfectMove implements MoveInterface
     private function score(Game $game)
     {
         switch ($game->state()) {
-            case State::STATUS_WIN_HUMAN:
+            case GameState::STATUS_WIN_HUMAN:
                 $score = 10 - $game->depth();
                 break;
-            case State::STATUS_WIN_BOT:
+            case GameState::STATUS_WIN_BOT:
                 $score = -10 + $game->depth();
                 break;
             default:

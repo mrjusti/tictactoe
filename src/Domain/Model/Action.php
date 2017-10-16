@@ -31,7 +31,7 @@ class Action
         $depth = $game->nextDepth();
         $turn  = $game->nextTurn();
 
-        return new Game(new State($board), $turn, $depth);
+        return new Game(new GameState($board), $turn, $depth);
     }
 
     /**

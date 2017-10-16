@@ -23,7 +23,7 @@ class MakeMoveTest extends TestCase
         ];
 
         // act
-        $query = new MakeMoveQuery($board, 'X');
+        $query = new MakeMoveQuery($board);
         $response = (new MakeMoveQueryHandler(new NextMoveMaker(), new GameDTOTransformer()))->handle($query);
 
         // assert
@@ -37,7 +37,7 @@ class MakeMoveTest extends TestCase
     public function given_a_perfect_game_started_by_human_when_try_next_play_then_must_return_perfect_moves($board, $expected)
     {
         // act
-        $query = new MakeMoveQuery($board, 'X');
+        $query = new MakeMoveQuery($board);
         $response = (new MakeMoveQueryHandler(new NextMoveMaker(), new GameDTOTransformer()))->handle($query);
 
         // assert

@@ -2,7 +2,7 @@
 
 namespace TicTacToe\Domain\Model;
 
-class State
+class GameState
 {
     /**
      * @var Board
@@ -15,17 +15,18 @@ class State
     private $status;
 
     const STATUS_RUNNING = 1;
-
     const STATUS_DRAW = 2;
-
     const STATUS_WIN_BOT = 3;
-
     const STATUS_WIN_HUMAN = 4;
 
     const UNIT_HUMAN = 'X';
-
     const UNIT_BOT= 'O';
 
+    /**
+     * GameState constructor.
+     *
+     * @param Board $board
+     */
     public function __construct(Board $board)
     {
         $this->board = $board;
@@ -56,11 +57,19 @@ class State
         return $this->board;
     }
 
-    public function setBoard($newBoard): State
+    /**
+     * @param $newBoard
+     *
+     * @return GameState
+     */
+    public function setBoard($newBoard): GameState
     {
         return new self($newBoard);
     }
 
+    /**
+     * Given a board will calculate the state of the game
+     */
     private function init()
     {
         $this->status            = self::STATUS_RUNNING;
@@ -88,6 +97,11 @@ class State
         }
     }
 
+    /**
+     * @param $unitWinner
+     *
+     * @return int
+     */
     private function getWinnerState($unitWinner)
     {
         return self::UNIT_BOT === $unitWinner

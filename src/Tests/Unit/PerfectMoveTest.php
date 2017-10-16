@@ -4,7 +4,7 @@ namespace TicTacToe\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use TicTacToe\Domain\Model\Game;
-use TicTacToe\Domain\Model\State;
+use TicTacToe\Domain\Model\GameState;
 use TicTacToe\Tests\Stub\PerfectMoveStub;
 
 class PerfectMoveTest extends TestCase
@@ -36,9 +36,9 @@ class PerfectMoveTest extends TestCase
             ['O', 'X', ''],
         ];
         $move = PerfectMoveStub::get();
-        $position = $move->makeMove($board, State::UNIT_BOT);
+        $position = $move->makeMove($board, GameState::UNIT_BOT);
 
-        $this->assertEquals([2, 2, State::UNIT_BOT], $position);
+        $this->assertEquals([2, 2, GameState::UNIT_BOT], $position);
     }
 
     /**
@@ -52,9 +52,9 @@ class PerfectMoveTest extends TestCase
             ['X', 'O', ''],
         ];
         $move = PerfectMoveStub::get();
-        $position = $move->makeMove($board, State::UNIT_BOT);
+        $position = $move->makeMove($board, GameState::UNIT_BOT);
 
-        $this->assertEquals([2, 2, State::UNIT_BOT], $position);
+        $this->assertEquals([2, 2, GameState::UNIT_BOT], $position);
     }
 
     /**
@@ -67,7 +67,7 @@ class PerfectMoveTest extends TestCase
     public function given_a_winner_position_free_then_must_play_for_win($board, $expected)
     {
         $move = PerfectMoveStub::get();
-        $position = $move->makeMove($board, State::UNIT_BOT);
+        $position = $move->makeMove($board, GameState::UNIT_BOT);
 
         $this->assertEquals($expected, $position);
     }
@@ -81,7 +81,7 @@ class PerfectMoveTest extends TestCase
                     ['X', '', ''],
                     ['', '', 'O'],
                 ],
-                [1, 1, State::UNIT_BOT]
+                [1, 1, GameState::UNIT_BOT]
             ],
             [
                 [
@@ -89,7 +89,7 @@ class PerfectMoveTest extends TestCase
                     ['X', '', 'X'],
                     ['X', 'O', ''],
                 ],
-                [1, 1, State::UNIT_BOT]
+                [1, 1, GameState::UNIT_BOT]
             ],
             [
                 [
@@ -97,7 +97,7 @@ class PerfectMoveTest extends TestCase
                     ['X', 'X', 'O'],
                     ['X', 'O', ''],
                 ],
-                [2, 0, State::UNIT_BOT]
+                [2, 0, GameState::UNIT_BOT]
             ],
             [
                 [
@@ -105,7 +105,7 @@ class PerfectMoveTest extends TestCase
                     ['X', 'X', 'O'],
                     ['O', 'X', ''],
                 ],
-                [2, 2, State::UNIT_BOT]
+                [2, 2, GameState::UNIT_BOT]
             ],
             [
                 [
@@ -113,7 +113,7 @@ class PerfectMoveTest extends TestCase
                     ['O', '', 'O'],
                     ['', 'X', 'X'],
                 ],
-                [1, 1, State::UNIT_BOT]
+                [1, 1, GameState::UNIT_BOT]
             ],
             [
                 [
@@ -121,7 +121,7 @@ class PerfectMoveTest extends TestCase
                     ['O', '', ''],
                     ['O', 'X', 'X'],
                 ],
-                [1, 1, State::UNIT_BOT]
+                [1, 1, GameState::UNIT_BOT]
             ],
             [
                 [
@@ -129,7 +129,7 @@ class PerfectMoveTest extends TestCase
                     ['', 'O', ''],
                     ['', '', 'X'],
                 ],
-                [0, 2, State::UNIT_BOT]
+                [0, 2, GameState::UNIT_BOT]
             ],
         ];
     }
@@ -144,7 +144,7 @@ class PerfectMoveTest extends TestCase
     public function given_a_loser_position_free_then_must_play_to_avoid_loose($board, $expected)
     {
         $move = PerfectMoveStub::get();
-        $position = $move->makeMove($board, State::UNIT_BOT);
+        $position = $move->makeMove($board, GameState::UNIT_BOT);
 
         $this->assertEquals($expected, $position);
     }
@@ -158,7 +158,7 @@ class PerfectMoveTest extends TestCase
                     ['', 'X', 'X'],
                     ['', 'O', 'X'],
                 ],
-                [0, 1, State::UNIT_BOT]
+                [0, 1, GameState::UNIT_BOT]
             ],
             [
                 [
@@ -166,7 +166,7 @@ class PerfectMoveTest extends TestCase
                     ['', 'X', 'X'],
                     ['X', 'O', ''],
                 ],
-                [0, 1, State::UNIT_BOT]
+                [0, 1, GameState::UNIT_BOT]
             ],
             [
                 [
@@ -174,7 +174,7 @@ class PerfectMoveTest extends TestCase
                     ['X', '', ''],
                     ['X', 'O', 'O'],
                 ],
-                [1, 1, State::UNIT_BOT]
+                [1, 1, GameState::UNIT_BOT]
             ],
             [
                 [
@@ -182,7 +182,7 @@ class PerfectMoveTest extends TestCase
                     ['X', '', ''],
                     ['X', 'O', 'O'],
                 ],
-                [1, 1, State::UNIT_BOT]
+                [1, 1, GameState::UNIT_BOT]
             ],
         ];
     }

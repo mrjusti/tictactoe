@@ -5,7 +5,7 @@ namespace TicTacToe\Domain\Model;
 class Game
 {
     /**
-     * @var State
+     * @var GameState
      */
     private $state;
 
@@ -19,7 +19,7 @@ class Game
      */
     private $depth;
 
-    public function __construct(State $state, $turnUnit, $depth = 0)
+    public function __construct(GameState $state, $turnUnit, $depth = 0)
     {
         $this->state    = $state;
         $this->turnUnit = $turnUnit;
@@ -69,7 +69,7 @@ class Game
     public function nextDepth()
     {
         $depth = $this->depth();
-        if ($this->turnUnit() == State::UNIT_HUMAN) {
+        if ($this->turnUnit() == GameState::UNIT_HUMAN) {
             $depth++;
         }
 
@@ -78,6 +78,6 @@ class Game
 
     public function nextTurn(): string
     {
-        return $this->turnUnit() === State::UNIT_BOT ? State::UNIT_HUMAN : State::UNIT_BOT;
+        return $this->turnUnit() === GameState::UNIT_BOT ? GameState::UNIT_HUMAN : GameState::UNIT_BOT;
     }
 }
