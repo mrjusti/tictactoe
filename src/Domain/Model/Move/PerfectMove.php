@@ -3,6 +3,7 @@
 namespace TicTacToe\Domain\Model\Move;
 
 use TicTacToe\Domain\Model\Action;
+use TicTacToe\Domain\Model\ActionList;
 use TicTacToe\Domain\Model\Board;
 use TicTacToe\Domain\Model\Game;
 use TicTacToe\Domain\Model\MoveInterface;
@@ -13,7 +14,7 @@ use function Lambdish\Phunctional\map;
 class PerfectMove implements MoveInterface
 {
     /**
-     * I use this in order to optimize the recursivite in order to avoid calculate
+     * I use this in order to optimize the recursion in order to avoid calculate
      * more than one the score of a game
      *
      * @var array
@@ -41,57 +42,74 @@ class PerfectMove implements MoveInterface
         $board = new Board($boardState);
         $game  = new Game(new State($board), $playerUnit);
 
-        $availablePositions = $game->board()->availablePositions();
-        $availableActions   = map(
-            function (Position $position) use ($game) {
-                $action       = new Action($position);
+        // get all the possible actions with their respective scores
+        $possibleActions = $this->possibleActions($game);
+
+        // get the better position (max or min score)
+        $position = $game->turnUnit() === State::UNIT_HUMAN
+            ? $possibleActions->maxScoredPosition()
+            : $possibleActions->minScoredPosition();
+
+        return [$position->column(), $position->row(), $game->turnUnit()];
+    }
+
+    /**
+     * @param Game $game
+     *
+     * @return ActionList
+     */
+    private function possibleActions(Game $game): ActionList
+    {
+        // given all the available positions (free cells) I will assign an scored to the position
+        $availableActions = ActionList::createFromPositionList($game->board()->availablePositions());
+
+        // get all the possible actions with their respective scores
+        $possibleActions = map(
+            function (Action $action) use ($game) {
                 $possibleGame = $action->applyToGame($game);
                 $action->setScore($this->minMaxValue($possibleGame));
 
                 return $action;
             },
-            $availablePositions->getArrayCopy()
+            $availableActions->getArrayCopy()
         );
 
-        if ($game->turnUnit() === State::UNIT_HUMAN) {
-            $position = $this->maxPosition($availableActions);
-        } else {
-            $position = $this->minPosition($availableActions);
-        }
-
-        return [$position->column(), $position->row(), $game->turnUnit()];
+        return new ActionList($possibleActions);
     }
 
+    /**
+     * @param Game $game
+     *
+     * @return int
+     */
     private function minMaxValue(Game $game)
     {
-        $encode = json_encode($game->board()->state());
+        // Because this function is recursive we have to save the scores already calculated because it could achieve
+        // the same score by different ways
+        $encode = $this->serialize($game);
         if (isset($this->games[$encode])) {
             return $this->games[$encode];
         }
 
+        // if game is over, return the score!
         if ($game->isOver()) {
             $score = $this->score($game);
 
             return $score;
         }
 
-        $stateScore = ($game->turnUnit() === State::UNIT_HUMAN) ? -1000 : 1000;
-        $availablePositions = $game->board()->availablePositions();
-        $availableNextGames = map(
-            function (Position $position) use ($game) {
-                $action         = new Action($position);
-                $possibleAction = $action->applyToGame($game);
+        // If the turn is for the humman I have to maximize the score, so I start with a minimum value, the opposite
+        // for the bot
+        $stateScore = ($game->turnUnit() === State::UNIT_HUMAN) ? -500 : 500;
 
-                return $possibleAction;
-            },
-            $availablePositions->getArrayCopy()
-        );
-
-        $turn = $game->turnUnit();
+        // given the possible games, I will calculate the min or max score with future possibilities
+        $availableNextGames = $this->possibleGames($game);
         \Lambdish\Phunctional\each(
-            function (Game $nextGame) use ($turn, &$stateScore, $encode) {
+            function (Game $nextGame) use ($game, &$stateScore, $encode) {
+                // here is the recursive, I will compare scores if it is the turn of the human to maximize or minimize
+                // if it is the bot
                 $nextScore = $this->minMaxValue($nextGame);
-                if ($turn === State::UNIT_HUMAN) {
+                if ($game->turnUnit() === State::UNIT_HUMAN) {
                     if ($nextScore > $stateScore) {
                         $stateScore = $nextScore;
                     }
@@ -101,7 +119,6 @@ class PerfectMove implements MoveInterface
                     }
                 }
                 $this->games[$encode] = $stateScore;
-
             },
             $availableNextGames
         );
@@ -109,9 +126,33 @@ class PerfectMove implements MoveInterface
         return $stateScore;
     }
 
+    /**
+     * @param Game $game
+     *
+     * @return array
+     */
+    private function possibleGames(Game $game)
+    {
+        $possibleActions    = ActionList::createFromPositionList($game->board()->availablePositions());
+        $availableNextGames = map(
+            function (Action $action) use ($game) {
+                $possibleAction = $action->applyToGame($game);
+
+                return $possibleAction;
+            },
+            $possibleActions->getArrayCopy()
+        );
+
+        return $availableNextGames;
+    }
+
+    /**
+     * @param Game $game
+     *
+     * @return int
+     */
     private function score(Game $game)
     {
-        $score = 0;
         switch ($game->state()) {
             case State::STATUS_WIN_HUMAN:
                 $score = 10 - $game->depth();
@@ -119,32 +160,20 @@ class PerfectMove implements MoveInterface
             case State::STATUS_WIN_BOT:
                 $score = -10 + $game->depth();
                 break;
+            default:
+                $score = 0;
         }
 
         return $score;
     }
 
-    private function maxPosition($availableActions): Position
+    /**
+     * @param Game $game
+     *
+     * @return string
+     */
+    private function serialize(Game $game)
     {
-        $sort = \Lambdish\Phunctional\sort(
-            function (Action $one, Action $other) {
-                return $other->score() <=> $one->score();
-            },
-            $availableActions
-        );
-
-        return $sort[0]->position();
-    }
-
-    private function minPosition($availableActions): Position
-    {
-        $sort = \Lambdish\Phunctional\sort(
-            function (Action $one, Action $other) {
-                return $one->score() <=> $other->score();
-            },
-            $availableActions
-        );
-
-        return $sort[0]->position();
+        return json_encode($game->board()->state());
     }
 }
