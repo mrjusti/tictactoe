@@ -15,10 +15,10 @@ interface MoveInterface
      * Returns an array, containing x and y coordinates for next move, and the unit that now occupies it.
      * Example: [2, 0, 'O'] - upper right corner - O player
      *
-     * @param array $boardState Current board state
+     * @param array $boardState  Current board state
      * @param string $playerUnit Player unit representation
      *
      * @return array
      */
-    public function makeMove($boardState, $playerUnit = 'X') : array;
+    public function makeMove($boardState, $playerUnit = 'X'): array;
 }

@@ -15,12 +15,16 @@ class GameState
     private $status;
 
     const STATUS_RUNNING = 1;
+
     const STATUS_DRAW = 2;
+
     const STATUS_WIN_BOT = 3;
+
     const STATUS_WIN_HUMAN = 4;
 
     const UNIT_HUMAN = 'X';
-    const UNIT_BOT= 'O';
+
+    const UNIT_BOT = 'O';
 
     /**
      * GameState constructor.
@@ -62,7 +66,7 @@ class GameState
      *
      * @return GameState
      */
-    public function setBoard($newBoard): GameState
+    public function updateBoard($newBoard): GameState
     {
         return new self($newBoard);
     }

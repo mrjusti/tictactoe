@@ -14,6 +14,12 @@ class Position
      */
     private $column;
 
+    /**
+     * Position constructor.
+     *
+     * @param int $row
+     * @param int $column
+     */
     public function __construct(int $row, int $column)
     {
         $this->row    = $row;

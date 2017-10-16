@@ -7,17 +7,22 @@ class BotPlayer
     /**
      * @var MoveInterface
      */
-    private $move;
+    private $moveStrategy;
 
     /**
      * @var string
      */
     private $unit;
 
-    public function __construct(MoveInterface $move)
+    /**
+     * BotPlayer constructor.
+     *
+     * @param MoveInterface $moveStrategy Strategy with the difficulty of the next move
+     */
+    public function __construct(MoveInterface $moveStrategy)
     {
-        $this->move  = $move;
-        $this->unit  = GameState::UNIT_BOT;
+        $this->moveStrategy = $moveStrategy;
+        $this->unit         = GameState::UNIT_BOT;
     }
 
     /**
@@ -28,15 +33,20 @@ class BotPlayer
         return $this->unit;
     }
 
+    /**
+     * @param GameState $state
+     *
+     * @return GameState
+     */
     public function move(GameState $state): GameState
     {
-        $board = $state->board();
-        $position = $this->move->makeMove($board->state(), $this->unit());
+        $board    = $state->board();
+        $position = $this->moveStrategy->makeMove($board->state(), $this->unit());
         $newBoard = $board->markPosition(
             new Position($position[1], $position[0]),
             $this->unit()
         );
 
-        return $state->setBoard($newBoard);
+        return $state->updateBoard($newBoard);
     }
 }

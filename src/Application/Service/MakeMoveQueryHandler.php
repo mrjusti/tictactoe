@@ -5,7 +5,7 @@ namespace TicTacToe\Application\Service;
 use TicTacToe\Application\Transformer\GameTransformer;
 use TicTacToe\Domain\Model\Board;
 use TicTacToe\Domain\Model\BotPlayer;
-use TicTacToe\Domain\Model\Move\PerfectMove;
+use TicTacToe\Domain\Model\PerfectMove\PerfectMoveStrategy;
 use TicTacToe\Domain\Model\GameState;
 use TicTacToe\Domain\Service\NextMoveMaker;
 
@@ -30,7 +30,7 @@ class MakeMoveQueryHandler
     public function __construct(NextMoveMaker $nextMoveMaker, GameTransformer $transformer)
     {
         $this->nextMoveMaker = $nextMoveMaker;
-        $this->transformer = $transformer;
+        $this->transformer   = $transformer;
     }
 
     /**
@@ -40,10 +40,12 @@ class MakeMoveQueryHandler
      */
     public function handle(MakeMoveQuery $query)
     {
-        $gameState = $this->nextMoveMaker->move(
-            new GameState(new Board($query->boardState())),
-            new BotPlayer(new PerfectMove())
-        );
+        // Instantiate the bot player with the perfect move strategy
+        $botPlayer = new BotPlayer(new PerfectMoveStrategy());
+        $gameState = new GameState(new Board($query->boardState()));
+
+        // get the new game state
+        $gameState = $this->nextMoveMaker->move($gameState, $botPlayer);
 
         return $this->transformer->write($gameState)->read();
     }

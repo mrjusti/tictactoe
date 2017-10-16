@@ -2,12 +2,12 @@
 
 namespace TicTacToe\Tests\Stub;
 
-use TicTacToe\Domain\Model\Move\PerfectMove;
+use TicTacToe\Domain\Model\PerfectMove\PerfectMoveStrategy;
 
 class PerfectMoveStub
 {
-    public static function get() : PerfectMove
+    public static function get() : PerfectMoveStrategy
     {
-        return new PerfectMove();
+        return new PerfectMoveStrategy();
     }
 }

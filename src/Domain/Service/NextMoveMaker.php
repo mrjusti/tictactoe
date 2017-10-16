@@ -7,6 +7,12 @@ use TicTacToe\Domain\Model\GameState;
 
 class NextMoveMaker
 {
+    /**
+     * @param GameState $state
+     * @param BotPlayer $botPlayer
+     *
+     * @return GameState
+     */
     public function move(GameState $state, BotPlayer $botPlayer): GameState
     {
         if ($state->isOver()) {
