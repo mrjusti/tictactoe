@@ -50,7 +50,7 @@ class PerfectMove implements MoveInterface
 
                 return $action;
             },
-            $availablePositions
+            $availablePositions->getArrayCopy()
         );
 
         if ($game->turnUnit() === State::UNIT_HUMAN) {
@@ -84,7 +84,7 @@ class PerfectMove implements MoveInterface
 
                 return $possibleAction;
             },
-            $availablePositions
+            $availablePositions->getArrayCopy()
         );
 
         $turn = $game->turnUnit();

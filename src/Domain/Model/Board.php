@@ -16,7 +16,6 @@ class Board
     private $state;
 
     const NUMBER_OF_ROWS = 3;
-
     const NUMBER_OF_COLUMNS = 3;
 
     public function __construct(array $state)
@@ -31,9 +30,9 @@ class Board
     }
 
     /**
-     * @return array
+     * @return PositionList
      */
-    public function availablePositions()
+    public function availablePositions() : PositionList
     {
         $positions = [];
         foreach ($this->state as $row => $values) {
@@ -44,14 +43,12 @@ class Board
             }
         }
 
-        return $positions;
+        return new PositionList($positions);
     }
 
     public function hasAllFieldsTaken(): bool
     {
-        $availablePositions = $this->availablePositions();
-
-        return empty($availablePositions);
+        return $this->availablePositions()->isEmpty();
     }
 
     public function getUnitWithAllFieldsInARowEqual()
@@ -94,14 +91,14 @@ class Board
     private function guard(array $state)
     {
         $size = count($state);
-        if ($size !== 3) {
+        if ($size !== self::NUMBER_OF_ROWS) {
             throw new InvalidBoardSize($size);
         }
 
         each(
             function ($row, $which) {
                 $size = count($row);
-                if ($size !== 3) {
+                if ($size !== self::NUMBER_OF_COLUMNS) {
                     throw new InvalidRowSize($which, $size);
                 }
             },

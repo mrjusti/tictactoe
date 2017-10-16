@@ -123,7 +123,14 @@ class PerfectMoveTest extends TestCase
                 ],
                 [1, 1, State::UNIT_BOT]
             ],
-
+            [
+                [
+                    ['X', 'X', 'O'],
+                    ['', 'O', ''],
+                    ['', '', 'X'],
+                ],
+                [0, 2, State::UNIT_BOT]
+            ],
         ];
     }
 
