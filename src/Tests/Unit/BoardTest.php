@@ -4,6 +4,7 @@ namespace TicTacToe\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use TicTacToe\Domain\Model\Board;
+use TicTacToe\Domain\Model\Position;
 
 class BoardTest extends TestCase
 {
@@ -89,4 +90,21 @@ class BoardTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @test
+     * @expectedException TicTacToe\Domain\Exception\PositionIsAlreadyTaken
+     */
+    public function given_a_non_empty_position_when_try_to_mark_then_has_to_throw_an_exception()
+    {
+        $state = [
+            ['', '', ''],
+            ['', 'X', ''],
+            ['', '', ''],
+        ];
+
+        $board = new Board($state);
+        $board->markPosition(new Position(1, 1), 'O');
+    }
+
 }
