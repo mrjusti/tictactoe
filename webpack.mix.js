@@ -12,6 +12,7 @@ let mix = require('laravel-mix');
  */
 
 mix
+    .copy('node_modules/material-design-lite/src/images', 'public/img')
     .js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .options({
