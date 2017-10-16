@@ -52,7 +52,7 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 64px;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
             }
