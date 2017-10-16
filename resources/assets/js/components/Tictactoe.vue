@@ -26,7 +26,7 @@
             submit: function (requestType, url) {
                 Vue.prototype.$http[requestType](url, {grid: this.grid})
                     .then(response => {
-                          this.grid = response.data; 
+                          this.grid = response.data.grid; 
                     })
                     .catch(error => {
                             
