@@ -30,6 +30,7 @@
         methods: {
             play: function (x, y) {
                 if (this.state == 1 && this.grid[y][x] == '') {
+                    this.state = 5;
                     this.grid[y][x] = 'X';
                     this.title = '...';
                     this.submit('post', '/api/play');    
