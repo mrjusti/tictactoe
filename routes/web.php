@@ -12,4 +12,4 @@
 */
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::post('/api/play', 'ApiController@next')->name('next');
+
