@@ -1,21 +1,23 @@
 # Tic Tac Toe
 
 Tic Tac Toe is an application with an API that can be called to make the moves, and a web interface, where the application can be visible.
-You can try the [Online Demo of TicTacToe](http://tictactoe.nerusanti.com/)
+You can try the [Online Demo of TicTacToe](http://tictactoe.nerusanti.com/).
+
+![coverage 100%](./public/img/screen.png)
 
 ## Technologies
 
-The application use **Laravel** for the framework but it is made with **Hexagonal Architecture** so it is anecdotal. You can find all the **Application**, **Domain** and **Behavoiur** and **Unit test** inside the folder ```src``` in the ```root``` folder.
+The application use **Laravel** for the framework but it is made with **Hexagonal Architecture** so it is anecdotal. You can find all the **Application**, **Domain** and **Behavoiur** and **Unit tests** inside the folder ```src``` in the ```root``` folder.
 
-For the **Acceptance** test you can see it inside the folder ```tests/Acceptance```. This test are separete because use the *test case* provided by Laravel.
+For the **Acceptance** tests you can see them inside the folder ```tests/Acceptance```. These tests are separated because use the *test case* provided by Laravel.
 
 ## Entry Point
 
-The entry point is a **post** request to ```/api/play```. It use the routing and controllers provide by Laravel. You can find it in ```/routes/api.php``` and ```/app/Http/Controllers/ApiController.php```.
+The entry point is a **post** request to ```/api/play```. It uses the routing and controllers provided by Laravel. You can find them in ```/routes/api.php``` and ```/app/Http/Controllers/ApiController.php```.
 
 Inside the controller you can see that I am using [Tactitian](https://tactician.thephpleague.com/) for **CQRS** and handle the **Use cases** inside ```src/Application/Service```.
 
-For the web interface the controller is ```/app/Http/Controllers/Home``` and the route path is inside ```/routes/web.php``` but there are any logic here. All the front-end is made with [Vue.js](https://vuejs.org/).
+For the web interface the controller is ```/app/Http/Controllers/Home``` and the route path is inside ```/routes/web.php``` but there are not any logic here. All the front-end is made with [Vue.js](https://vuejs.org/).
 
 ## DDD
 
@@ -69,7 +71,7 @@ Typically, this string should be 32 characters long. The key can be set in the `
 
 ### Behaviour and Unit Tests
 
-This test could be find inside the folder `src/Tests/`. Here you can find the *Stub* used to avoid instanciate the classes inside the tests and if I change something during the development proccess I don't have to modify all the test, only the stub.
+This test could be find inside the folder `src/Tests/`. Here you can find the *Stub* used to avoid instantiate the classes inside the tests and if I change something during the development process I don't have to modify all the test, only the stub.
 
 ### Acceptance Tests
 
@@ -77,6 +79,7 @@ Because I use the **Test Case** from Laravel that help me to make **post** reque
 
 ### Coverage
 
-The coverage it is practically the 100% percent. I am not using the ContextException in test because I am not loggin any but I am use to have this kind of exception so I already prepare the code with this.
+The coverage it is practically the 100%. I am not using the ContextException in test because I had not logged any but I am used to having this kind of exception so I've already prepared the code with this.
 
-![coverage 100%](./public/img/coverage.png =800x)
+![coverage 100%](./public/img/coverage.png)
+
