@@ -19,11 +19,11 @@
 
 ### Public Directory
 
-You should configure your web server's document / web root to be the  public directory. The index.php in this directory serves as the front controller for all HTTP requests entering your application.
+You should configure your web server's document / web root to be the `public` directory. The `index.php` in this directory serves as the front controller for all HTTP requests entering your application.
 
 ### Configuration Files
 
-All of the configuration files for the Laravel framework are stored in the config directory.
+All of the configuration files for the Laravel framework are stored in the `config` directory.
 
 ### Directory Permissions
 
@@ -33,4 +33,4 @@ After installing Laravel, you may need to configure some permissions. Directorie
 
 The next thing you should do after installing Laravel is set your application key to a random string. This key has already been set for you by the `php artisan key:generate` command.
 
-Typically, this string should be 32 characters long. The key can be set in the `.env` environment file. If you have not renamed the `.env.example` file to .env, you should do that now. **If the application key is not set, your user sessions and other encrypted data will not be secure!**
+Typically, this string should be 32 characters long. The key can be set in the `.env` environment file. If you have not renamed the `.env.example` file in the root directory to `.env`, you should do that now. **If the application key is not set, your user sessions and other encrypted data will not be secure!**
