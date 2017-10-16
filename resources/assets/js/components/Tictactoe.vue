@@ -1,14 +1,20 @@
 <template>
     <div id="tic-tac-toe">
-        {{ title }}
-        <div class="mdl-grid" v-for="(row, y) in grid">
-            <div class="cell mdl-cell mdl-cell--4-col" v-for="(cell, x) in row" v-on:click="play(x, y)">
-                <i class="material-icons mdl-color-text--green" v-if="cell == 'X'">face</i>
-                <i class="material-icons mdl-color-text--red" v-else-if="cell == 'O'">computer</i>
+        <div class="flex-container">{{ title }}</div>
+        <div class="flex-center">
+            <div style="width:300px;">
+                <div class="flex-container" v-for="(row, y) in grid">
+                    <div class="flex-item" v-for="(cell, x) in row" v-on:click="play(x, y)">
+                        <i class="material-icons mdl-color-text--green" v-if="cell == 'X'">face</i>
+                        <i class="material-icons mdl-color-text--red" v-else-if="cell == 'O'">computer</i>
+                    </div>
+                </div>
             </div>
         </div>
-        <button class="please mdl-button mdl-js-button mdl-button--raised" v-on:click="please">please!</button>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" v-on:click="reset">reset</button>
+        <div class="flex-center" style="margin-bottom:20px;">
+            <button class="please mdl-button mdl-js-button mdl-button--raised" v-on:click="please">bot starts!</button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" v-on:click="reset">reset</button>
+        </div>
     </div>
 </template>
 
@@ -88,6 +94,8 @@
 
 <style>
 
+
+
     .mdl-button {
         margin-top: 40px;
     }
@@ -96,19 +104,36 @@
         margin-right: 10px;
     }
 
-    #tic-tac-toe {
-        padding: 30px;
-    }
-
-    .cell {
-        background-color: #fdfdfd;
-        border: 5px solid #cccccc;
-        padding: 30px;
-        height: 90px;
-        cursor: pointer;
-    }
-
     .mdl-grid {
         padding: 0;
+    }
+
+    .flex-container {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row;
+        justify-content: space-around;
+    }
+    .flex-item {
+        background: rgba(158,158,158, 0.20);
+        margin: 5px;
+        color: white;
+        text-align: center;
+        flex: 1 0 auto;
+        height:70px;
+        width: 70px;
+        line-height: 80px;
+        cursor: pointer;
+    }
+    .flex-item:before {
+        content:'';
+        float:left;
+        padding-top:100%;
     }
 </style>

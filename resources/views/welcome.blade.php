@@ -53,6 +53,8 @@
 
             .title {
                 font-size: 84px;
+                font-family: 'Raleway', sans-serif;
+                font-weight: 100;
             }
 
             .links > a {
@@ -71,14 +73,14 @@
         </style>
     </head>
     <body>
-        <div id="app" class="flex-center position-ref full-height">
+        <div id="app">
             <progress-bar></progress-bar>
-            <div class="content">
-                <div class="title m-b-md">
+            <div class="flex-center">
+                <h1 class="title">
                     Tic Tac Toe
                 </div>
                 <tictactoe></tictactoe>
-                <div class="links">
+                <div class="links flex-center">
                     <a href="https://github.com/mrjusti/tictactoe">GitHub</a>
                     <a href="https://www.linkedin.com/in/hkleiman/">LinkedIn</a>
                 </div>
