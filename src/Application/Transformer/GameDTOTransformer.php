@@ -20,6 +20,9 @@ class GameDTOTransformer implements GameTransformer
 
     public function read()
     {
-        return $this->state->board()->state();
+        return [
+            'grid'   => $this->state->board()->state(),
+            'status' => $this->state->status(),
+        ];
     }
 }

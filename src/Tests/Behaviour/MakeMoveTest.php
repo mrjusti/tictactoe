@@ -27,7 +27,7 @@ class MakeMoveTest extends TestCase
         $response = (new MakeMoveQueryHandler(new NextMoveMaker(), new GameDTOTransformer()))->handle($query);
 
         // assert
-        $this->assertEquals($board, $response);
+        $this->assertEquals($board, $response['grid']);
     }
 
     /**
@@ -41,7 +41,7 @@ class MakeMoveTest extends TestCase
         $response = (new MakeMoveQueryHandler(new NextMoveMaker(), new GameDTOTransformer()))->handle($query);
 
         // assert
-        $this->assertEquals($expected, $response);
+        $this->assertEquals($expected, $response['grid']);
     }
 
     public function perfectMoves()

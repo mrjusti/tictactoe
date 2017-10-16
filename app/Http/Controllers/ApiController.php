@@ -21,7 +21,7 @@ class ApiController extends Controller
 
     public function next(Request $request)
     {
-        $query = new MakeMoveQuery($request->get('grid'), 'X');
+        $query = new MakeMoveQuery($request->get('grid'));
         $response = $this->bus->dispatch($query);
 
         return response($response, Response::HTTP_ACCEPTED);
