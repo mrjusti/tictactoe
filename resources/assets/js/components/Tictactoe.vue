@@ -24,12 +24,14 @@
             },
 
             submit: function (requestType, url) {
+                Event.fire('progress-bar--show', true);
                 Vue.prototype.$http[requestType](url, {grid: this.grid})
                     .then(response => {
-                          this.grid = response.data.grid; 
+                        this.grid = response.data.grid; 
+                        Event.fire('progress-bar--show', false);
                     })
                     .catch(error => {
-                            
+                        Event.fire('progress-bar--show', false);      
                     });
             },
 

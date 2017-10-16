@@ -74,6 +74,7 @@
     </head>
     <body>
         <div id="app" class="flex-center position-ref full-height">
+            <progress-bar></progress-bar>
             <div class="content">
                 <div class="title m-b-md">
                     Tic Tac Toe
