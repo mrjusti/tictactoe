@@ -155,10 +155,10 @@ class Move
                         $stateScore = $nextScore;
                     }
                 }
-                $this->moves[$encode] = $stateScore;
             },
             $availableNextMoves
         );
+        $this->moves[$encode] = $stateScore;
 
         return $stateScore;
     }
